@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:tailwind": "npx tailwindcss build baykarApp/styles/styles.css -o baykarApp/static/css/styles.css"
+    "build:tailwind": "npx tailwindcss build baykarApp/styles/styles.css -o baykarApp/static/baykarApp/css/styles.css"
   },
   "keywords": [],
   "author": "",

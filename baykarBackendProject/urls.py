@@ -20,8 +20,9 @@ from django.urls import path
 from baykarApp import views
 
 urlpatterns = [
-    path('', views.login, name='home_page'),
+    path('', views.login, name='landing_page'),
     path('admin/', admin.site.urls),
     path('signup/', views.signup, name='signup'),
     path('login/', views.login, name='login'),
+    path('home/', views.home_page, name='home_page'),
 ]
