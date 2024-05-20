@@ -2,8 +2,27 @@
 
 ## Projeyi çalıştırma
 
-      $ npm install
-      $ npm run build:tailwind
+- Proje hazırda kurulu bulunan bir **PostgreSQL** yazılımına ihtiyaç duymaktadır. Postgre içinde `baykar_db` adında bir
+  database tanımlı olmalıdır. İçinin boş olması önemli değildir.
+    - **PostgreSQL** için default konfigürasyonları kullandım. Bu konfigürasyonlar `settings.py` dosyasında da
+      görülebileceği gibi şu şekildedir:
+        -     DATABASES = {
+                    'default': {
+                      'ENGINE': 'django.db.backends.postgresql',
+                      'NAME': 'baykar_db',
+                      'USER': 'postgres',
+                      'PASSWORD': '2222',
+                      'HOST': 'localhost',
+                      'PORT': '5432',
+                    }
+                  }
+
+## Çalıştırılması Gereken Kurulum Komutları
+
+Python kütüphanelerini kurmalıyız
+$ pip install -r requirements.txt
+
+    $ python manage.py migrate 
 
 ## Kullanılan Teknolojiler
 

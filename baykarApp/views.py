@@ -36,7 +36,7 @@ def signup_view(request):
         if user is not None:
             login(request, user)
             messages.success(request, "Signup successful")
-            return redirect('main_page')
+            return redirect('home_page')
         else:
             messages.error(request, "Authentication failed")
             return redirect('signup')
