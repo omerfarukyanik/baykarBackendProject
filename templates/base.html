@@ -16,7 +16,9 @@
 <div class="fixed top-0 left-0 w-full bg-blue-300 text-white h-16 flex justify-between items-center px-4">
     <!-- Logo on the left -->
     <div class="flex items-center h-full ">
-        <img src="{% static 'baykarApp/images/BaykarLogo.png' %}" alt="Logo" class="h-14 mr-4">
+        <a href="{% url 'home_page' %}">
+            <img src="{% static 'baykarApp/images/BaykarLogo.png' %}" alt="Logo" class="h-14 mr-4">
+        </a>
         <span class="text-lg font-bold text-blue-950">Baykar IHA Rental Store</span>
     </div>
 
