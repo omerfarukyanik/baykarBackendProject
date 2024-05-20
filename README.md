@@ -19,10 +19,13 @@
 
 ## Çalıştırılması Gereken Kurulum Komutları
 
-Python kütüphanelerini kurmalıyız
-$ pip install -r requirements.txt
+- Python kütüphanelerini kurmalıyız.
 
-    $ python manage.py migrate 
+      $ pip install -r requirements.txt
+
+- Modellerimizi database'e taşımak için aşağıdaki komutu çalıştırmalıyz.
+
+      $ python manage.py migrate 
 
 ## Kullanılan Teknolojiler
 
