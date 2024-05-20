@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Rental Logs - Baykar{% endblock %}
+
+{% block additional_styles %}
+
+    <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+    <div class="container mx-auto py-8">
+        <h1 class="text-2xl font-bold mb-4">Rental Logs</h1>
+        <table id="rentalLogsTable" class="table-auto w-full">
+            <thead>
+            <tr>
+                <th class="text-center">Time</th>
+                <th class="text-center">User</th>
+                <th class="text-center">Product</th>
+                <th class="text-center">Quantity</th>
+                <th class="text-center">Unit Cost</th>
+                <th class="text-center">Total Cost</th>
+                <th class="text-center">Edit</th>
+                <th class="text-center">Delete</th>
+                <!-- Add more table headers for other columns -->
+            </tr>
+            </thead>
+            <tbody>
+            {% for rental_log in rental_logs %}
+                <tr data-rental-log-id="{{ rental_log.id }}">
+                    <td class="text-center">{{ rental_log.rental_time }}</td>
+                    <td class="text-center">{{ rental_log.user.username }}</td>
+                    <td class="text-center">{{ rental_log.product.name }}</td>
+                    <td class="text-center">{{ rental_log.rental_amount }}</td>
+                    <td class="text-center">{{ rental_log.rental_unit_price }}</td>
+                    <td class="text-center">{{ rental_log.rental_cost }}</td>
+                    <td class="text-center">
+                        <button type="submit" class="editButton" onclick="openEditModal(this)">
+                            <img src="{% static 'baykarApp/images/edit_icon.png' %}" class=" w-10 h-15"
+                                 alt="edit button">
+                        </button>
+
+                    </td>
+                    <td class="text-center">
+                        <form action="{% url 'delete_rental_log' rental_log.id %}"
+                              method="post">
+                            {% csrf_token %}
+                            <button type="submit">
+                                <img src="{% static 'baykarApp/images/rubbish-bin-svgrepo-com.svg' %}" class="w-10 h-15"
+                                     alt="delete button">
+                            </button>
+                        </form>
+                    </td>
+                    <!-- Add more table cells for other columns -->
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+                <div class="sm:flex sm:items-start">
+                    <div class="mt-3 text-center sm:mt-0 sm:text-left">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                            Edit <span id="productName"></span> Rental Log
+                        </h3>
+                        <div class="mt-2">
+                            <form >
+                                <label for="rentalLogEditDialogRentalId"></label><input class="hidden"
+                                                                                        id="rentalLogEditDialogRentalId">
+                                <div class="mb-4">
+                                    <label for="quantity" class="block text-gray-700 text-sm font-bold mb-2">
+                                        Quantity
+                                    </label>
+                                    <input type="text" id="quantity" name="quantity"
+                                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="unitCost" class="block text-gray-700 text-sm font-bold mb-2">Unit
+                                        Cost</label>
+                                    <input type="text" id="unitCost" name="unitCost"
+                                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+                    <button type="submit" onclick="saveChanges()"
+                            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
+                        Save changes
+                    </button>
+                    <button type="button" onclick="closeEditModal()"
+                            class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Include DataTables JS -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="{% static 'baykarApp/js/rental_log.js' %}"></script>
+    <script>
+        async function saveChanges() {
+            const productName = document.getElementById('productName').value;
+            const quantity = document.getElementById('quantity').value;
+            const unitCost = document.getElementById('unitCost').value;
+            const rentalId = document.getElementById('rentalLogEditDialogRentalId').value;
+
+
+            const response = await fetch(`/rentallogs/edit/${rentalId}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': '{% csrf_token %}}'
+                },
+                body: new URLSearchParams({
+                    'product': productName,
+                    'rental_amount': quantity,
+                    'rental_unit_price': unitCost
+                })
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                closeEditModal();
+                location.reload();  // Optionally, you can update the table row instead of reloading the page
+            } else {
+                alert('Error updating rental log: ' + result.errors);
+            }
+        }
+    </script>
+
+{% endblock %}

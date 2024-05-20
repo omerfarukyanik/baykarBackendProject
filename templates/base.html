@@ -8,12 +8,14 @@
     {% load compress %}
     {% compress css %}
         <link href="{% static 'baykarApp/css/styles.css' %}" rel="stylesheet">
+        <link href="{% static 'baykarApp/css/toast.css' %}" rel="stylesheet">
     {% endcompress %}
+    {% block additional_styles %}{% endblock %}
 </head>
 <body class="bg-gray-100">
 
 <!-- Navigation bar -->
-<div class="fixed top-0 left-0 w-full bg-blue-300 text-white h-16 flex justify-between items-center px-4">
+<div class="fixed top-0 left-0 w-full bg-blue-300 text-white h-16 flex justify-between items-center px-4 z-50">
     <!-- Logo on the left -->
     <div class="flex items-center h-full ">
         <a href="{% url 'home_page' %}">
@@ -26,7 +28,7 @@
     <div class="flex items-center space-x-4">
         <!-- Cart button -->
         <div>
-            <a href="{% url 'cart' %}" class="flex items-center space-x-2 text-blue-950 h-8 w-8">
+            <a href="{% url 'view_cart' %}" class="flex items-center space-x-2 text-blue-950 h-8 w-8">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M24 3l-.743 2h-1.929l-3.474 12h-13.239l-4.615-11h16.812l-.564 2h-13.24l2.937 7h10.428l3.432-12h4.195zm-15.5 15c-.828 0-1.5.672-1.5 1.5 0 .829.672 1.5 1.5 1.5s1.5-.671 1.5-1.5c0-.828-.672-1.5-1.5-1.5zm6.9-7-1.9 7c-.828 0-1.5.671-1.5 1.5s.672 1.5 1.5 1.5 1.5-.671 1.5-1.5c0-.828-.672-1.5-1.5-1.5z"></path>
                 </svg>
@@ -42,7 +44,18 @@
 
             <!-- Dropdown menu -->
             <div id="dropdown" class="hidden absolute top-full right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg">
-                <a href="{% url 'profile' %}" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Go to Profile</a>
+                <form action="{% url 'rental_logs' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                        View Rental History
+                    </button>
+                </form>
+                <form action="{% url 'profile' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                        Go to Profile
+                    </button>
+                </form>
                 <form action="{% url 'logout' %}" method="post">
                     {% csrf_token %}
                     <button type="submit" class="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-100">
@@ -54,6 +67,8 @@
     </div>
 </div>
 
+<div class="toast-container" id="toast-container"></div>
+
 <!-- Main content -->
 <div class="pt-16">
     {% block content %}
@@ -61,5 +76,9 @@
 </div>
 
 <script src="{% static 'baykarApp/js/topbar.js' %}"></script>
+<script src="{% static 'baykarApp/js/toast.js' %}"></script>
+<script id="toast-messages" type="application/json">
+        {{ messages|safe }}
+    </script>
 </body>
 </html>
