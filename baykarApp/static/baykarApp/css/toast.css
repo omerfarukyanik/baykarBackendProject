@@ -1,0 +1,35 @@
+.toast-container {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1000;
+}
+
+.toast {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 0.375rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-left-width: 4px;
+    margin-bottom: 0.5rem;
+}
+
+.toast-error {
+    border-left-color: #f56565;
+}
+
+.toast-success {
+    border-left-color: #48bb78;
+}
+
+.toast-info {
+    border-left-color: #ffb228;
+}
+
+.toast-close {
+    cursor: pointer;
+    padding-left: 1rem;
+}

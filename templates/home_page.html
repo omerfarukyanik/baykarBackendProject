@@ -1,14 +1,91 @@
-<!-- main.html -->
+<!-- templates/home_page.html -->
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Welcome to the Main Page!</h1>
-    <!-- Add your main page content here -->
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Home - MyApp{% endblock %}
+
+{% block content %}
+    <div class="bg-white h-screen py-6 sm:py-8 lg:py-12">
+        <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
+            <div class="mb-4 flex items-center justify-between gap-8 sm:mb-8 md:mb-12">
+                <div class="flex items-center gap-12">
+                    <h2 class="text-2xl font-bold text-blue-950 lg:text-3xl">Our Drones</h2>
+
+                    <p class="hidden max-w-screen-sm text-gray-500 md:block">
+                        Discover a sky-high experience with our diverse range of drones available for rent.
+                        Fly, film, and fulfill your aerial dreams today.
+                    </p>
+                </div>
+
+                <a href="#"
+                   class="inline-block rounded-lg border bg-white px-4 py-2 text-center text-sm font-semibold text-blue-950 outline-none ring-indigo-300 transition duration-100 hover:bg-blue-300 focus-visible:ring active:bg-gray-200 md:px-8 md:py-3 md:text-base">
+                    More
+                </a>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-6 xl:gap-8">
+                <!-- image - start -->
+                <a href="#"
+                   class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-80">
+                    <img src="{% static 'baykarApp/images/baykar_bayraktar_diha.jpg' %}"
+                         loading="lazy"
+                         alt="baykar_bayraktar_diha.jpg"
+                         class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"/>
+
+                    <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50"></div>
+
+                    <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-9xl opacity-65 transition duration-200 group-hover:opacity-100">DİHA</span>
+                </a>
+                <!-- image - end -->
+
+                <!-- image - start -->
+                <a href="#"
+                   class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:col-span-2 md:h-80">
+                    <img src="{% static 'baykarApp/images/Baykar_Bayraktar_TB-3.png' %}"
+                         loading="lazy"
+                         alt="Baykar_Bayraktar_TB-3.png"
+                         class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"/>
+
+                    <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50"></div>
+
+                    <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-9xl opacity-65 transition duration-200 group-hover:opacity-100">TB-3</span>
+                </a>
+                <!-- image - end -->
+
+                <!-- image - start -->
+                <a href="#"
+                   class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:col-span-2 md:h-80">
+                    <img src="{% static 'baykarApp/images/baykar_bayraktar_akinci.jpg' %}"
+                         loading="lazy"
+                         alt="baykar_bayraktar_akinci.jpg"
+                         class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110 "/>
+
+                    <div
+                            class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50">
+                    </div>
+
+                    <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-9xl opacity-65 transition duration-200 group-hover:opacity-100">Akıncı</span>
+                </a>
+                <!-- image - end -->
+
+                <!-- image - start -->
+                <a href="#"
+                   class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-80">
+                    <img src="{% static 'baykarApp/images/baykar_bayraktar_tb2.jpg' %}"
+                         loading="lazy"
+                         alt="baykar_bayraktar_tb2.jpg"
+                         class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"/>
+
+                    <div
+                            class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50">
+                    </div>
+
+                    <span class="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-9xl opacity-65 transition duration-200 group-hover:opacity-100">TB-2</span>
+                </a>
+                <!-- image - end -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

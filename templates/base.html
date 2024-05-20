@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Baykar Backend Project{% endblock %}</title>
+    {% load static %}
+    {% load compress %}
+    {% compress css %}
+        <link href="{% static 'baykarApp/css/styles.css' %}" rel="stylesheet">
+    {% endcompress %}
+</head>
+<body class="bg-gray-100">
+
+<!-- Navigation bar -->
+<div class="fixed top-0 left-0 w-full bg-blue-300 text-white h-16 flex justify-between items-center px-4">
+    <!-- Logo on the left -->
+    <div class="flex items-center h-full ">
+        <img src="{% static 'baykarApp/images/BaykarLogo.png' %}" alt="Logo" class="h-14 mr-4">
+        <span class="text-lg font-bold text-blue-950">Baykar IHA Rental Store</span>
+    </div>
+
+    <!-- Cart and Profile icons -->
+    <div class="flex items-center space-x-4">
+        <!-- Cart button -->
+        <div>
+            <a href="{% url 'cart' %}" class="flex items-center space-x-2 text-blue-950 h-8 w-8">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M24 3l-.743 2h-1.929l-3.474 12h-13.239l-4.615-11h16.812l-.564 2h-13.24l2.937 7h10.428l3.432-12h4.195zm-15.5 15c-.828 0-1.5.672-1.5 1.5 0 .829.672 1.5 1.5 1.5s1.5-.671 1.5-1.5c0-.828-.672-1.5-1.5-1.5zm6.9-7-1.9 7c-.828 0-1.5.671-1.5 1.5s.672 1.5 1.5 1.5 1.5-.671 1.5-1.5c0-.828-.672-1.5-1.5-1.5z"></path>
+                </svg>
+            </a>
+        </div>
+
+        <!-- Profile icon and dropdown -->
+        <div class="relative">
+            <button class="flex items-center space-x-2" onclick="toggleDropdown()">
+                <img src="{% static 'baykarApp/images/default_profile.png' %}" alt="Profile Icon"
+                     class="h-8 rounded-full">
+            </button>
+
+            <!-- Dropdown menu -->
+            <div id="dropdown" class="hidden absolute top-full right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg">
+                <a href="{% url 'profile' %}" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Go to Profile</a>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-100">
+                        Logout
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main content -->
+<div class="pt-16">
+    {% block content %}
+    {% endblock %}
+</div>
+
+<script src="{% static 'baykarApp/js/topbar.js' %}"></script>
+</body>
+</html>
